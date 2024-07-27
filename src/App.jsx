@@ -9,6 +9,7 @@ import Setting from "./pages/dashboard/main/setting/page"
 import DesignEnquires from "./pages/dashboard/main/design-enquires/page"
 import ContactSubmission from "./pages/dashboard/main/contact-submission/page"
 import CareerSubmission from "./pages/dashboard/main/career-submission/page"
+import Table from "./shared/tables/Table"
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 

@@ -46,4 +46,53 @@ const DashBoardLowerNavItem = [
     },
 ]
 
-export {DashBoardUpperNavItem, DashBoardLowerNavItem}
+const TableHeaderName = {
+    artistSupport: {
+        first: 'Artist Name',
+        second: 'Painting Title',
+        third: 'Paintaing type',
+        fourth: 'Activity Status',
+        fifth: 'Approvals',
+        buttonLevel: 'Approval',
+        isOrderStatus: false
+    },
+    designInquires: {
+        first: 'Client Profile',
+        second: 'Job Type',
+        third: 'Notes',
+        fourth: 'Activity Status',
+        fifth: 'Details',
+        buttonLevel: 'Check Details',
+        isOrderStatus: false
+    },
+    careerSubmission: {
+        first: 'Candidate Name',
+        second: 'Job Type',
+        third: 'Notes',
+        fourth: 'Activity Status',
+        fifth: 'Details',
+        buttonLevel: 'Check Details',
+        isOrderStatus: false
+    },
+    contactInquires: {
+        first: 'Client Profile',
+        second: 'Job Type',
+        third: 'Notes',
+        fourth: 'Activity Status',
+        fifth: 'Details',
+        buttonLevel: 'Check Details',
+        isOrderStatus: false
+    },
+    orderStatus: {
+        first: 'Client Profile',
+        second: 'Job Type',
+        third: 'Payment Status',
+        fourth: 'Activity Status',
+        fifth: 'Details',
+        buttonLevel: 'Check Details',
+        isOrderStatus: false
+    },
+
+}
+
+export {DashBoardUpperNavItem, DashBoardLowerNavItem, TableHeaderName}
