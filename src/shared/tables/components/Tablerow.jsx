@@ -1,6 +1,6 @@
 
 
-const Tablerow = ({buttonLevel}) => {
+const Tablerow = ({buttonLevel, onClickHandler}) => {
   return (
     <tr>
       <td className='px-5 py-3 border-b border-gray-200 bg-white text-sm'>
@@ -30,7 +30,7 @@ const Tablerow = ({buttonLevel}) => {
         <p className='text-gray-900 whitespace-no-wrap'>43</p>
       </td>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <button className="bg-[#84012B] text-white px-5 py-2 rounded-full font-semibold">{buttonLevel}</button>
+        <button onClick={onClickHandler} className="bg-[#84012B] text-white px-5 py-2 rounded-full font-semibold">{buttonLevel}</button>
       </td>
     </tr>
   );

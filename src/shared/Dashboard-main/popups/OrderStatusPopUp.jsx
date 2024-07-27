@@ -1,0 +1,25 @@
+import PopupHeader from "./components/popup-header"
+import CustomerDetails from "./components/customer-details"
+
+const OrderStatusPopUp = () => {
+  return (
+    <div className="w-[40rem] border border-gray-500 rounded-xl p-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white">
+        <PopupHeader />
+        <div className="my-4 flex items-center gap-6">
+            <img className="w-80 h-80 rounded-2xl object-cover" src="https://s3-alpha-sig.figma.com/img/cd4f/fe48/4959c85e418cc00a9e1d040ad8aa3da4?Expires=1722816000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iPV23dRe0rUlME2jvqqFPOCKHCM~FRgaYPEUnYzLfEqB23WhaZbCM4Eg8PfOD9UHTH-TJ2siUWbhc4P2g93grxJ1KYRnIt6EP1c9-pcHi4Sqqp72mZHO1NvIrGwJO1jIFBchx6WxGgtlIxsNtvTWKjBnNAgycV27KWRoKLiCpCP23KDf32nlz-HAphSpLzExO29GkhZwy3WP-hUFBjVFnCz2DGGc5RcR3IYdYecMCbWHU6v0DMR2PQf5mxC-AHQPWvUVFqVGOGfeTK7z62PQqmEqL1ONHJKrq7GaK0e7cVjMzZkr0LjE0TSoIUgPEDnu1TUNslvhJfakPbFAvJVqXg__" alt="image" />
+            <div className="flex-1">
+                <p className="text-blue-600 underline cursor-pointer">loremipsum.pdf</p>
+                <div className="">
+                    <p className="text-sm text-gray-400 my-2">Addon notes</p>
+                    <p className="w-80 h-32 border border-gray-400 rounded-xl p-4 text-sm text-gray-400 tracking-tighter">
+                    “Lorem ipsum dolor sit amet consectetur. Dui id leo viverra vivamus ipsum amet. Nisl luctus imperdiet cursus vulputate duis vulputate a tortor. Massa augue faucibus ac quisque in aliquet. Elementum mauris quis quam feugiat.”
+                    </p>
+                </div>
+            </div>
+        </div>
+        <CustomerDetails />
+    </div>
+  )
+}
+
+export default OrderStatusPopUp

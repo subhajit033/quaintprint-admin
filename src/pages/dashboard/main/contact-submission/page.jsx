@@ -1,8 +1,9 @@
-import React from 'react'
+import { TableHeaderName } from "@/utils/const"
+import Table from "@/shared/tables/Table"
 
 const ContactSubmission = () => {
   return (
-    <div>ContactSubmission</div>
+    <Table {...TableHeaderName.contactInquires} height={'650'}/>
   )
 }
 
