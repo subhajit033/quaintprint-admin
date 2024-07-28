@@ -2,17 +2,7 @@ import { useState } from 'react';
 import Chart from '@/shared/Dashboard-main/order-status/Chart';
 import Table from '@/shared/tables/Table';
 import { TableHeaderName } from '@/utils/const';
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+
 import OrderStatusPopUp from '@/shared/Dashboard-main/popups/OrderStatusPopUp';
 
 const OrderStatus = () => {
@@ -57,7 +47,7 @@ const OrderStatus = () => {
         </DialogContent>
       </Dialog> */}
       
-        <OrderStatusPopUp />
+        <OrderStatusPopUp isOpen={isOpen} onClickHandler={() => setIsOpen(false)}/>
       
     </div>
   );

@@ -11,7 +11,7 @@ const PopupHeader = () => {
         />
         <div>
           <p className='text-xl text-black font-semibold'>Subhajit Kundu</p>
-          <p>Kolkata, West Bengal</p>
+          <p className='text-sm text-gray-500'>Kolkata, West Bengal</p>
         </div>
       </div>
       <div className='flex items-center gap-4'>
