@@ -38,7 +38,7 @@ const Sidebar = () => {
               <div className='flex items-center gap-2'>
                 <img
                   className='w-5 h-5'
-                  src={`https://s3-alpha-sig.figma.com/img/3800/3f44/1a3cf642c500dce7a0ba82141fcaded1?Expires=1722816000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=p1paQa6NrqaP9i02fB~4OyIqpy1KsgbqMwYsyfSZOyZdfIj5~kkGp~jR9x44W1yfE0RwOG63jIauy1Ay4EWh~NQyUqbPQiA0wn33MGSIgST00gTFPRsS6Q3lgr9wRTpZQe~kde8XOitqVRgXCXmJeQPwtJReC5BSiLu3HA6f0Y5RwXN7xw3Xgo6-hG48wdEfikpk3Fw9UC6ldd9iYd~ZPlD4kalYuW5upXIsbFTnYLoB40bqzhyRY1ZOO8a9zOVcd5nHHnEvCSUpHNq7QlaCR~ZAtMNHcJ6tF89EcL0INGtc7Sn9e7hl3FtrfSJDYKlkamKx6jwGttQOtcKsjvCi7w__`}
+                  src="logout.png"
                   alt='image'
                 />
                 <p className='text-[#DC3545]'>Logout</p>

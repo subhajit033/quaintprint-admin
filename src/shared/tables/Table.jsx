@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import Tablerow from "./components/Tablerow";
 
-const Table = ({first, second, third, fourth, fifth, buttonLevel, height, onClickHandler}) => {
+const Table = ({first, second, third, fourth, fifth, buttonLevel, height, onClickHandler, formattedData}) => {
   return (
     <div className='rounded-md w-full'>
       
@@ -9,8 +9,8 @@ const Table = ({first, second, third, fourth, fifth, buttonLevel, height, onClic
         <div style={{ maxHeight: `${height}px` }} className={`py-4 overflow-auto`}>
           <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
             <table className='min-w-full leading-normal border-2 border-gray-300'>
-              <thead>
-                <tr>
+              <thead className="w-full">
+                <tr className="w-full">
                   <th className='px-5 py-3 border-b-2 border-gray-200 bg-[#EBD9FF] text-left text-xs font-semibold text-gray-600 uppercase tracking-wider'>
                     {first}
                   </th>
@@ -31,8 +31,8 @@ const Table = ({first, second, third, fourth, fifth, buttonLevel, height, onClic
               </thead>
               <tbody>
                 {
-                  Array(10).fill('-').map((_, i)=>{
-                    return <Tablerow key={i} buttonLevel={buttonLevel} onClickHandler={onClickHandler}/>
+                  formattedData?.map((tableData, i)=>{
+                    return <Tablerow key={i} buttonLevel={buttonLevel} onClickHandler={onClickHandler} tableData={tableData}/>
                   })
                 }
                 
