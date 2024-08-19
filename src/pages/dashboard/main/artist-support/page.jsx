@@ -4,11 +4,18 @@ import OrderStatusPopUp from '@/shared/Dashboard-main/popups/OrderStatusPopUp';
 import { useState } from 'react';
 import { adminSevice } from '@/api/admin.service';
 import { useEffect } from 'react';
-import { formatTableRowData } from '@/utils/helper';
+import { formatPdtDetails, formatTableRowData } from '@/utils/helper';
+import { formatAddress, formatUserDeatils } from '@/utils/helper';
+import api from '@/api';
 const ArtistSupport = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formattedData, setFormattedData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [pdtId, setPdtId] = useState('');
+  const [address, setAddress] = useState(null);
+  const [pdtDetails, setPdtDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
+
   const fetchPdt = async () => {
     try {
       const res = await adminSevice.useGetUnapprovedPdt();
@@ -20,8 +27,9 @@ const ArtistSupport = () => {
         'title',
         'paintingType',
         'status',
+        '_id',
       ]);
-      setFormattedData(data)
+      setFormattedData(data);
       setLoading(false);
       console.log(data);
     } catch (error) {
@@ -30,9 +38,39 @@ const ArtistSupport = () => {
     }
   };
 
+  const getSinglePdtDetails = async () => {
+    try {
+      const res = await api.get('/admin/product/' + pdtId);
+      console.log(res);
+      if (res.statusText === 'OK') {
+        const pdt = res?.data?.data?.data;
+        setAddress(formatAddress(pdt?.artist?.address));
+        setPdtDetails(
+          formatPdtDetails(['paintingType', 'paintingSize', 'picture'], pdt)
+        );
+        setUserDetails(formatUserDeatils(pdt?.artist));
+
+        setTimeout(() => {
+          setIsOpen(true);
+        }, 700);
+      } else {
+        throw new Error('Failed to load data');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchPdt();
   }, []);
+
+  useEffect(() => {
+    if (pdtId !== '') {
+      getSinglePdtDetails();
+    }
+    console.log(pdtId);
+  }, [pdtId]);
 
   return (
     <div>
@@ -48,14 +86,24 @@ const ArtistSupport = () => {
         <Table
           {...TableHeaderName.artistSupport}
           formattedData={formattedData}
-          onClickHandler={() => setIsOpen(true)}
-          
+          onClickHandler={(id) => {
+            //setIsOpen(true);
+            setPdtId(id);
+          }}
           height={'550'}
         />
       )}
       <OrderStatusPopUp
         isOpen={isOpen}
-        onClickHandler={() => setIsOpen(false)}
+        address={address}
+        pdtDetails={pdtDetails}
+        userDetails={userDetails}
+        pdtId={pdtId}
+        isArtistPage={true}
+        onClickHandler={() => {
+          // setArtistId(id);
+          setIsOpen(false);
+        }}
       />
     </div>
   );

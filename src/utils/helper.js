@@ -1,5 +1,13 @@
 export function formatTableRowData(dataArray, fields) {
-  const formattedField = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'];
+  const formattedField = [
+    'first',
+    'second',
+    'third',
+    'fourth',
+    'fifth',
+    'sixth',
+    'id',
+  ];
 
   return dataArray.map((item) => {
     let formattedItem = {};
@@ -21,3 +29,28 @@ export function formatTableRowData(dataArray, fields) {
     return formattedItem;
   });
 }
+
+export const formatAddress = (address) => {
+  return `${address?.addressLine1} , ${
+    address?.addressLine2 ? address.addressLine2 : ''
+  } , ${address.city} , ${address?.state} , ${address?.country}`;
+};
+
+export const formatPdtDetails = (fields, data) => {
+  let formatData = {};
+  for (let i = 0; i < fields.length; i++) {
+    formatData[fields[i]] = data[fields[i]];
+  }
+  return formatData;
+};
+
+export const formatUserDeatils = (user) => {
+  return {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    avatar: user.avatar,
+    contactNo: user.contactNo,
+    altContactNo: user.altContactNo ? user.altContactNo : '',
+    email: user?.email,
+  };
+};

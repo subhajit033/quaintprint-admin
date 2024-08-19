@@ -47,7 +47,7 @@ const OrderStatus = () => {
         </DialogContent>
       </Dialog> */}
       
-        <OrderStatusPopUp isOpen={isOpen} onClickHandler={() => setIsOpen(false)}/>
+        <OrderStatusPopUp isOpen={isOpen} isArtistPage={false} onClickHandler={() => setIsOpen(false)}/>
       
     </div>
   );
