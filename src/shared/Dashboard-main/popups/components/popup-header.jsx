@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Phone } from 'lucide-react';
 import api from '@/api';
 
@@ -12,6 +13,10 @@ const PopupHeader = ({
   pdtId,
 }) => {
   const approvePdt = async () => {
+    if(price === ''){
+      toast.error('please set the price for product');
+      return
+    }
     try {
       const res = await api.patch('/admin/approve-product/' + pdtId, { price });
       toast.success('Approval Successfull');
