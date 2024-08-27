@@ -31,9 +31,12 @@ export function formatTableRowData(dataArray, fields) {
 }
 
 export const formatAddress = (address) => {
+  if (!address) {
+    return 'Address Not updated yet by the artist';
+  }
   return `${address?.addressLine1} , ${
     address?.addressLine2 ? address.addressLine2 : ''
-  } , ${address.city} , ${address?.state} , ${address?.country}`;
+  } , ${address?.city} , ${address?.state} , ${address?.country}`;
 };
 
 export const formatPdtDetails = (fields, data) => {
@@ -46,11 +49,11 @@ export const formatPdtDetails = (fields, data) => {
 
 export const formatUserDeatils = (user) => {
   return {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    avatar: user.avatar,
-    contactNo: user.contactNo,
-    altContactNo: user.altContactNo ? user.altContactNo : '',
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    avatar: user?.avatar,
+    contactNo: user?.contactNo,
+    altContactNo: user?.altContactNo ? user?.altContactNo : '',
     email: user?.email,
   };
 };

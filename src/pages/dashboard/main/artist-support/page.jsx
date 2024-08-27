@@ -44,7 +44,7 @@ const ArtistSupport = () => {
       console.log(res);
       if (res.statusText === 'OK') {
         const pdt = res?.data?.data?.data;
-        setAddress(formatAddress(pdt?.artist?.address));
+        setAddress(formatAddress(pdt?.artist?.address || null));
         setPdtDetails(
           formatPdtDetails(['paintingType', 'paintingSize', 'picture'], pdt)
         );
