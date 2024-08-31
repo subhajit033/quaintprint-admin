@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { contentservice } from '@/api/content.service';
 import toast from 'react-hot-toast';
+import { Trash2 } from 'lucide-react';
 const HomeBanner = () => {
   const bannerUrl = '';
 
@@ -10,6 +11,7 @@ const HomeBanner = () => {
     contentservice.useGetBanner(enabled);
   const uploadAsset = contentservice.useUploadAsset();
   const uploadBanner = contentservice.useUploadBanner();
+  const deleteBanner = contentservice.useDeleteBanner();
 
   useEffect(() => {
     setEnabled(true);
@@ -54,6 +56,16 @@ const HomeBanner = () => {
     });
   };
 
+  const handleDeleteBanner = (idx) => {
+    deleteBanner.mutate(idx, {
+      onSuccess: () => {
+        toast.success('Banner deleted succesfully');
+        setEnabled(true);
+        refetch();
+      },
+    });
+  };
+
   return (
     <div>
       <div className='grid grid-cols-4 gap-4'>
@@ -61,12 +73,17 @@ const HomeBanner = () => {
           ? ''
           : data?.data?.data?.data?.map((banner) => {
               return (
-                <img
-                  key={banner._id}
-                  className='w-80 h-56 object-cover border border-gray-400 rounded-md'
-                  src={banner.image}
-                  alt='product_image'
-                />
+                <div key={banner._id}>
+                  <img
+                    className='w-80 h-56 object-cover border border-gray-400 rounded-md'
+                    src={banner.image}
+                    alt='product_image'
+                  />
+                  <Trash2
+                    onClick={() => handleDeleteBanner(banner._id)}
+                    className='text-red-600'
+                  />
+                </div>
               );
             })}
       </div>

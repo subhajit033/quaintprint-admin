@@ -7,20 +7,6 @@ import { Trash2 } from 'lucide-react';
 import { contentservice } from '@/api/content.service';
 import toast from 'react-hot-toast';
 
-const ProductCard = ({ image, title, price }) => {
-  return (
-    <div className='w-[20rem] rounded-xl overflow-hidden mx-4'>
-      <img
-        className='object-cover rounded-xl w-full h-[21rem]'
-        src={image}
-        alt='pdt-img'
-      />
-      <p className='text-center text-xl font-semibold'>{title}</p>
-      <p className='text-center font-bold text-blue-600'>{`${price}/-`}</p>
-    </div>
-  );
-};
-
 const BestDeals = () => {
   const [bestDeals, setBestDeals] = useState();
   const [enabled, setEnabled] = useState(false);
@@ -28,13 +14,16 @@ const BestDeals = () => {
     contentservice.useGetBestDeals(enabled);
   const uploadAsset = contentservice.useUploadAsset();
   const uploadBestDeals = contentservice.useUploadBestDeals();
+  const deleteDeals = contentservice.useDeleteBestDeals();
 
   const deletePdt = (idx) => {
-    setBestDeals(
-      bestDeals.filter((pdt, i) => {
-        return i !== idx;
-      })
-    );
+    deleteDeals.mutate(idx, {
+      onSuccess: () => {
+        toast.success('Product deleted succesfully');
+        setEnabled(true);
+        refetch();
+      },
+    });
   };
 
   const handleBannerUpload = (e) => {
@@ -88,11 +77,36 @@ const BestDeals = () => {
   }, []);
   return (
     <div className='w-full space-y-4'>
-      {isSuccess && data?.data?.data?.data?.length === 0
-        ? ''
-        : data?.data?.data?.data?.map((product) => {
-            return <ProductCard key={product._id} {...product} />;
-          })}
+      <div className='grid grid-cols-4 gap-4'>
+        {isSuccess && data?.data?.data?.data?.length === 0
+          ? ''
+          : data?.data?.data?.data?.map((product) => {
+              return (
+                <div
+                  key={product._id}
+                  className='w-[10rem] rounded-xl overflow-hidden mx-4'
+                >
+                  <img
+                    className='object-cover rounded-xl w-full h-[10rem]'
+                    src={product?.image}
+                    alt='pdt-img'
+                  />
+                  <div className='flex items-center justify-center gap-4'>
+                    <div>
+                      <p className='text-center text-xl font-semibold'>
+                        {product?.title}
+                      </p>
+                      <p className='text-center font-bold text-blue-600'>{`${product?.price}/-`}</p>
+                    </div>
+                    <Trash2
+                      onClick={() => deletePdt(product._id)}
+                      className='text-red-600'
+                    />
+                  </div>
+                </div>
+              );
+            })}
+      </div>
       <div>
         <form onSubmit={handleUploadDelas}>
           <div className='flex items-center justify-center w-full gap-10'>
@@ -143,7 +157,6 @@ const BestDeals = () => {
                 className='hidden'
               />
             </Label>
-            <Trash2 className='text-red-600' />
           </div>
           <Button type='submit'>Save</Button>
         </form>

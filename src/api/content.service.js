@@ -62,6 +62,31 @@ const useUploadAsset = () => {
   });
 };
 
+const useDeleteBanner = () => {
+  return useMutation({
+    mutationKey: ['deletePdt'],
+    mutationFn: async (id) => {
+      return api.delete(`/admin/banner/${id}`);
+    },
+  });
+};
+const useDeleteBestDeals = () => {
+  return useMutation({
+    mutationKey: ['deleteDeals'],
+    mutationFn: async (id) => {
+      return api.delete(`/admin/best-deal/${id}`);
+    },
+  });
+};
+const useDeleteBestSelling = () => {
+  return useMutation({
+    mutationKey: ['deleteSelling'],
+    mutationFn: async (id) => {
+      return api.delete(`/admin/best-seller/${id}`);
+    },
+  });
+};
+
 export const contentservice = {
   useUploadAsset,
   useGetBanner,
@@ -70,4 +95,7 @@ export const contentservice = {
   useUploadBanner,
   useUploadBestDeals,
   useUploadtSeller,
+  useDeleteBanner,
+  useDeleteBestDeals,
+  useDeleteBestSelling,
 };
