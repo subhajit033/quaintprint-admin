@@ -14,4 +14,17 @@ const useGetUnapprovedPdt = () => {
   return api.get('/admin/unapproved-pdt');
 };
 
-export const adminSevice = { useAdminLogin, useGetUnapprovedPdt };
+const useGetQueries = () => {
+  return useQuery({
+    queryKey: ['queries'],
+    queryFn: async () => {
+      return api.get('/admin/enquiry');
+    },
+  });
+};
+
+export const adminSevice = {
+  useAdminLogin,
+  useGetUnapprovedPdt,
+  useGetQueries,
+};

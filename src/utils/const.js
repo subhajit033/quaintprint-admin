@@ -38,7 +38,7 @@ const DashBoardLowerNavItem = [
     image: 'career.png',
   },
   {
-    title: 'Contact Submissions',
+    title: 'Queries',
     url: '/dashboard/contact-submissions',
     image: 'contact.png',
   },
@@ -90,6 +90,7 @@ const TableHeaderName = {
     buttonLevel: 'Check Details',
     isOrderStatus: false,
   },
+  queryDetails: ['Name', 'Email', 'Phone No', 'Message'],
 };
 
 export { DashBoardUpperNavItem, DashBoardLowerNavItem, TableHeaderName };

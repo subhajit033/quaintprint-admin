@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Chart from '@/shared/Dashboard-main/order-status/Chart';
 import Table from '@/shared/tables/Table';
 import { TableHeaderName } from '@/utils/const';
-
+import api from '@/api';
 import OrderStatusPopUp from '@/shared/Dashboard-main/popups/OrderStatusPopUp';
 
 const OrderStatus = () => {
@@ -46,9 +46,12 @@ const OrderStatus = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog> */}
-      
-        <OrderStatusPopUp isOpen={isOpen} isArtistPage={false} onClickHandler={() => setIsOpen(false)}/>
-      
+
+      <OrderStatusPopUp
+        isOpen={isOpen}
+        isArtistPage={false}
+        onClickHandler={() => setIsOpen(false)}
+      />
     </div>
   );
 };

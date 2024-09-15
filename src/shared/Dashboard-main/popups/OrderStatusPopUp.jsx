@@ -6,6 +6,7 @@ import { X } from 'lucide-react';
 import { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 const OrderStatusPopUp = ({
   isOpen,
@@ -17,6 +18,8 @@ const OrderStatusPopUp = ({
   pdtId,
 }) => {
   const [price, setPrice] = useState('');
+  const [size, setSize] = useState('');
+  const [productData, setProductData] = useState([]);
   return (
     <div
       className={`w-[40rem] h-[40rem] overflow-auto ${
@@ -42,9 +45,9 @@ const OrderStatusPopUp = ({
           alt='image'
         />
         <div className='flex-1'>
-          <p className='text-blue-600 underline cursor-pointer'>
+          {/* <p className='text-blue-600 underline cursor-pointer'>
             loremipsum.pdf
-          </p>
+          </p> */}
           <div className=''>
             <p className='text-sm text-gray-400 my-2'>Addon notes</p>
             <p className='w-80 h-32 border border-gray-400 rounded-xl p-4 text-sm text-gray-400 tracking-tighter'>
@@ -62,15 +65,49 @@ const OrderStatusPopUp = ({
           <p>Print Type: {pdtDetails?.paintingType}</p>
           <p>Required Print Size: {pdtDetails?.paintingSize}</p>
         </div>
-        <div className='grid w-full max-w-sm items-center gap-1.5'>
-          <Label htmlFor='email'>Set Price</Label>
-          <Input
-            onChange={(e) => setPrice(e.target.value)}
-            value={price}
-            type='text'
-            id='email'
-            placeholder='Price'
-          />
+        <div className='flex items-start justify-between gap-6'>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setProductData([...productData, { price, size }]);
+              setPrice('');
+              setSize('');
+            }}
+          >
+            <div className='grid w-full max-w-sm items-center gap-1.5'>
+              <Label htmlFor='email'>Set Size</Label>
+              <Input
+                onChange={(e) => setSize(e.target.value)}
+                value={size}
+                type='text'
+                id='email'
+                required
+                placeholder='size'
+              />
+            </div>
+            <div className='grid w-full max-w-sm items-center gap-1.5'>
+              <Label htmlFor='email'>Set Price</Label>
+              <Input
+                onChange={(e) => setPrice(e.target.value)}
+                value={price}
+                type='text'
+                id='email'
+                required
+                placeholder='Price'
+              />
+            </div>
+            <Button type='submit'>Save</Button>
+          </form>
+          <div>
+            {productData.length > 0 &&
+              productData.map((data, i) => {
+                return (
+                  <p key={i} className='font-semibold text-xl'>
+                    {data.size} : ₹{data.price}
+                  </p>
+                );
+              })}
+          </div>
         </div>
       </div>
       {/* <div className="flex justify-end">
