@@ -41,21 +41,17 @@ const ArtistSupport = () => {
   const getSinglePdtDetails = async () => {
     try {
       const res = await api.get('/admin/product/' + pdtId);
-      console.log(res);
-      if (res.statusText === 'OK') {
-        const pdt = res?.data?.data?.data;
-        setAddress(formatAddress(pdt?.artist?.address || null));
-        setPdtDetails(
-          formatPdtDetails(['paintingType', 'paintingSize', 'picture'], pdt)
-        );
-        setUserDetails(formatUserDeatils(pdt?.artist));
 
-        setTimeout(() => {
-          setIsOpen(true);
-        }, 700);
-      } else {
-        throw new Error('Failed to load data');
-      }
+      const pdt = res?.data?.data?.data;
+      setAddress(formatAddress(pdt?.artist?.address || null));
+      setPdtDetails(
+        formatPdtDetails(['paintingType', 'paintingSize', 'picture'], pdt)
+      );
+      setUserDetails(formatUserDeatils(pdt?.artist));
+
+      setTimeout(() => {
+        setIsOpen(true);
+      }, 700);
     } catch (error) {
       console.log(error);
     }
