@@ -68,9 +68,9 @@ const PopupHeader = ({
         </div>
       </div>
       <div className='flex items-center gap-4'>
-        <button className='p-4 rounded-full'>
+        {/* <button className='p-4 rounded-full'>
           <Phone />
-        </button>
+        </button> */}
         <button
           onClick={() => setIsDiaOpen(true)}
           className='px-6 py-2 rounded-full border border-[#E51F9A] text-[#E51F9A]'
