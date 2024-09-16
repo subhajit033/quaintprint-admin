@@ -28,6 +28,7 @@ const PopupHeader = ({
   pdtId,
 }) => {
   const [isDiaOpen, setIsDiaOpen] = useState(false);
+  const [message, setMessage] = useState('');
   const approvePdt = async () => {
     if (price === '') {
       toast.error('please set the price for product');
@@ -42,6 +43,21 @@ const PopupHeader = ({
       toast.error('Operation Failed , try again');
     }
   };
+  const denyProduct = async () => {
+    console.log('deny');
+    try {
+      const res = await api.patch('/admin/deny-product/' + pdtId, {
+        email,
+        message,
+      });
+      setIsDiaOpen(false);
+      toast.success('Product Denied Successfully');
+    } catch (e) {
+      toast.success('Please try again');
+      console.log(e);
+    }
+  };
+
   return (
     <div className='w-full flex items-center justify-between border-b border-gray-400 pb-4'>
       <div className='flex items-center gap-4'>
@@ -68,7 +84,7 @@ const PopupHeader = ({
           Accept
         </button>
       </div>
-      <Dialog open={isDiaOpen}>
+      <Dialog className='relative z-50' open={isDiaOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Are you absolutely sure?</DialogTitle>
@@ -81,13 +97,24 @@ const PopupHeader = ({
               <Label htmlFor='link' className='sr-only'>
                 Link
               </Label>
-              <Input type='text' placeholder='Enter you reason for denying' />
+              <Input
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                type='text'
+                placeholder='Enter you reason for denying'
+              />
             </div>
           </div>
           <DialogFooter className='sm:justify-start gap-4'>
-            <Button className='' type='button'>
+            <Button
+              onClick={() => denyProduct()}
+              type='button'
+              className=''
+              variant=''
+            >
               Submit
             </Button>
+
             <Button
               onClick={() => setIsDiaOpen(false)}
               type='button'
