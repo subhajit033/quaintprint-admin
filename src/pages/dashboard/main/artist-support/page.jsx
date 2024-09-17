@@ -45,7 +45,10 @@ const ArtistSupport = () => {
       const pdt = res?.data?.data?.data;
       setAddress(formatAddress(pdt?.artist?.address || null));
       setPdtDetails(
-        formatPdtDetails(['paintingType', 'paintingSize', 'picture'], pdt)
+        formatPdtDetails(
+          ['paintingType', 'paintingSize', 'picture', 'title'],
+          pdt
+        )
       );
       setUserDetails(formatUserDeatils(pdt?.artist));
 

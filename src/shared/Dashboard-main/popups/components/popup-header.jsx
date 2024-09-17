@@ -24,18 +24,21 @@ const PopupHeader = ({
   avatar,
   email,
   isArtistPage,
-  price,
+  productData,
+
   pdtId,
 }) => {
   const [isDiaOpen, setIsDiaOpen] = useState(false);
   const [message, setMessage] = useState('');
   const approvePdt = async () => {
-    if (price === '') {
+    if (productData.length === 0) {
       toast.error('please set the price for product');
       return;
     }
     try {
-      const res = await api.patch('/admin/approve-product/' + pdtId, { price });
+      const res = await api.patch('/admin/approve-product/' + pdtId, {
+        price: productData,
+      });
       toast.success('Approval Successfull');
       console.log(res);
     } catch (error) {
@@ -68,9 +71,9 @@ const PopupHeader = ({
         </div>
       </div>
       <div className='flex items-center gap-4'>
-        {/* <button className='p-4 rounded-full'>
+        <button className='p-4 rounded-full'>
           <Phone />
-        </button> */}
+        </button>
         <button
           onClick={() => setIsDiaOpen(true)}
           className='px-6 py-2 rounded-full border border-[#E51F9A] text-[#E51F9A]'

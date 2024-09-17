@@ -20,6 +20,11 @@ const DashBoardUpperNavItem = [
     image: 'artis support.png',
   },
   {
+    title: 'Approved Product',
+    url: '/dashboard/approve-product',
+    image: 'artis support.png',
+  },
+  {
     title: 'Content',
     url: '/dashboard/setting',
     image: 'setting.png',

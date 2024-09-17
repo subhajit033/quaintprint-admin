@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import PopupHeader from './components/popup-header';
 import CustomerDetails from './components/customer-details';
-import { Share2 } from 'lucide-react';
+
 import { X } from 'lucide-react';
 import { useState } from 'react';
 import { Label } from '@/components/ui/label';
@@ -37,6 +37,7 @@ const OrderStatusPopUp = ({
         isArtistPage={isArtistPage}
         price={price}
         pdtId={pdtId}
+        productData={productData}
       />
       <div className='my-4 flex items-center gap-6'>
         <img
@@ -45,9 +46,9 @@ const OrderStatusPopUp = ({
           alt='image'
         />
         <div className='flex-1'>
-          {/* <p className='text-blue-600 underline cursor-pointer'>
-            loremipsum.pdf
-          </p> */}
+          <p className='text-blue-600 underline cursor-pointer'>
+            {pdtDetails?.title}
+          </p>
           <div className=''>
             <p className='text-sm text-gray-400 my-2'>Addon notes</p>
             <p className='w-80 h-32 border border-gray-400 rounded-xl p-4 text-sm text-gray-400 tracking-tighter'>

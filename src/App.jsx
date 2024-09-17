@@ -9,6 +9,7 @@ import DesignEnquires from './pages/dashboard/main/design-enquires/page';
 import ContactSubmission from './pages/dashboard/main/contact-submission/page';
 import CareerSubmission from './pages/dashboard/main/career-submission/page';
 import { AuthContext } from './utils/auth.context';
+import ApprovePdt from './pages/dashboard/main/approve-pdt/ApprovePdt';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useState } from 'react';
@@ -17,7 +18,7 @@ const App = () => {
   const [isAuthenticated, setIsauthenticated] = useState(false);
   return (
     <>
-      <AuthContext.Provider value={{isAuthenticated, setIsauthenticated}}>
+      <AuthContext.Provider value={{ isAuthenticated, setIsauthenticated }}>
         <RouterProvider router={appRouter} />
       </AuthContext.Provider>
     </>
@@ -63,6 +64,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/dashboard/contact-submissions',
         element: <ContactSubmission />,
+      },
+      {
+        path: '/dashboard/approve-product',
+        element: <ApprovePdt />,
       },
     ],
   },
