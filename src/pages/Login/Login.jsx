@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { Toaster } from 'react-hot-toast';
 import { useContext } from 'react';
 import { AuthContext } from '@/utils/auth.context';
+import { Loader2 } from 'lucide-react';
 
 const Login = () => {
   const login = adminSevice.useAdminLogin();
@@ -147,9 +148,9 @@ const Login = () => {
           <div className='mt-8'>
             <button
               type='submit'
-              className='w-full py-3 px-6 text-sm tracking-wide rounded-md text-white bg-[#84142E] hover:opacity-65 focus:outline-none'
+              className='w-full py-3 px-6  flex justify-center text-sm tracking-wide rounded-md text-white bg-[#84142E] hover:opacity-65 focus:outline-none'
             >
-              Login
+              {login.isPending ? <Loader2 className='animate-spin' /> : 'Login'}
             </button>
           </div>
         </form>

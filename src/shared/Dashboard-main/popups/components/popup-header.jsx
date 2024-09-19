@@ -29,6 +29,7 @@ const PopupHeader = ({
   pdtId,
 }) => {
   const [isDiaOpen, setIsDiaOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const [message, setMessage] = useState('');
   const approvePdt = async () => {
     if (productData.length === 0) {
@@ -64,14 +65,21 @@ const PopupHeader = ({
   return (
     <div className='w-full flex items-center justify-between border-b border-gray-400 pb-4'>
       <div className='flex items-center gap-4'>
-        <img className='w-20 h-20 rounded-full' src={avatar} alt='user-img' />
+        <img
+          className='w-20 h-20 rounded-full'
+          src={avatar !== 'N/A' ? avatar : '/user_avatar.png'}
+          alt='user-img'
+        />
         <div>
           <p className='text-xl text-black font-semibold'>{`${firstName} ${lastName}`}</p>
           {/* <p className='text-sm text-gray-500'>Kolkata, West Bengal</p> */}
         </div>
       </div>
       <div className='flex items-center gap-4'>
-        <button className='p-4 rounded-full'>
+        <button
+          onClick={() => setIsContactOpen(true)}
+          className='p-4 rounded-full'
+        >
           <Phone />
         </button>
         <button
@@ -87,39 +95,54 @@ const PopupHeader = ({
           Accept
         </button>
       </div>
-      <Dialog className='relative z-50' open={isDiaOpen}>
+      <Dialog className='relative z-50' open={isDiaOpen || isContactOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              Enter your reason for denying this
-            </DialogDescription>
+            {isDiaOpen && <DialogTitle> Are you absolutely sure?</DialogTitle>}
+
+            {isDiaOpen && (
+              <DialogDescription>
+                Enter your reason for denying this
+              </DialogDescription>
+            )}
+            {isContactOpen && (
+              <DialogDescription>
+                Artist has not updated the contact details
+              </DialogDescription>
+            )}
           </DialogHeader>
-          <div className='flex items-center space-x-2'>
-            <div className='grid flex-1 gap-2'>
-              <Label htmlFor='link' className='sr-only'>
-                Link
-              </Label>
-              <Input
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                type='text'
-                placeholder='Enter you reason for denying'
-              />
+          {isDiaOpen && (
+            <div className='flex items-center space-x-2'>
+              <div className='grid flex-1 gap-2'>
+                <Label htmlFor='link' className='sr-only'>
+                  Link
+                </Label>
+                <Input
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  type='text'
+                  placeholder='Enter you reason for denying'
+                />
+              </div>
             </div>
-          </div>
+          )}
           <DialogFooter className='sm:justify-start gap-4'>
-            <Button
-              onClick={() => denyProduct()}
-              type='button'
-              className=''
-              variant=''
-            >
-              Submit
-            </Button>
+            {isDiaOpen && (
+              <Button
+                onClick={() => denyProduct()}
+                type='button'
+                className=''
+                variant=''
+              >
+                Submit
+              </Button>
+            )}
 
             <Button
-              onClick={() => setIsDiaOpen(false)}
+              onClick={() => {
+                setIsDiaOpen(false);
+                setIsContactOpen(false);
+              }}
               type='button'
               className=''
               variant='destructive'

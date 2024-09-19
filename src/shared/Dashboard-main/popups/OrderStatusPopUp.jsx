@@ -20,6 +20,9 @@ const OrderStatusPopUp = ({
   const [price, setPrice] = useState('');
   const [size, setSize] = useState('');
   const [productData, setProductData] = useState([]);
+  const deleteProduct = (idx) => {
+    setProductData(productData.filter((_, i) => i != idx));
+  };
   return (
     <div
       className={`w-[40rem] h-[40rem] overflow-auto ${
@@ -64,7 +67,7 @@ const OrderStatusPopUp = ({
       <div className='space-y-3 pb-4'>
         <div className='flex items-center gap-10'>
           <p>Print Type: {pdtDetails?.paintingType}</p>
-          <p>Required Print Size: {pdtDetails?.paintingSize}</p>
+          {/* <p>Required Print Size: {pdtDetails?.paintingSize}</p> */}
         </div>
         <div className='flex items-start justify-between gap-6'>
           <form
@@ -103,8 +106,17 @@ const OrderStatusPopUp = ({
             {productData.length > 0 &&
               productData.map((data, i) => {
                 return (
-                  <p key={i} className='font-semibold text-xl'>
+                  <p
+                    key={i}
+                    className='font-semibold text-xl flex items-center gap-4'
+                  >
                     {data.size} : ₹{data.price}
+                    <span
+                      onClick={() => deleteProduct(i)}
+                      className='text-red-500 cursor-pointer'
+                    >
+                      X
+                    </span>
                   </p>
                 );
               })}

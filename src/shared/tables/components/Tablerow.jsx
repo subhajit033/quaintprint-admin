@@ -14,7 +14,11 @@ const Tablerow = ({ buttonLevel, onClickHandler, tableData }) => {
       <td className='px-5 py-3 border-b border-gray-200 bg-white text-sm'>
         <div className='flex items-center'>
           <div className='flex-shrink-0 w-10 h-10'>
-            <img className='w-full h-full rounded-full' src={avatar} alt='' />
+            <img
+              className='w-full h-full rounded-full'
+              src={avatar ? avatar : '/user_avatar.png'}
+              alt='user img'
+            />
           </div>
           <div className='ml-3'>
             <p className='text-gray-900 whitespace-no-wrap font-semibold'>
