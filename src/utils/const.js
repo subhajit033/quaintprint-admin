@@ -86,15 +86,15 @@ const TableHeaderName = {
     buttonLevel: 'Check Details',
     isOrderStatus: false,
   },
-  orderStatus: {
-    first: 'Client Profile',
-    second: 'Job Type',
-    third: 'Payment Status',
-    fourth: 'Activity Status',
-    fifth: 'Details',
-    buttonLevel: 'Check Details',
-    isOrderStatus: false,
-  },
+  orderStatus: [
+    'Client',
+    'Painting Type',
+    'Order Id',
+    'Payment Status',
+    'Activity Status',
+    'Action',
+  ],
+
   queryDetails: ['Name', 'Email', 'Phone No', 'Message'],
 };
 

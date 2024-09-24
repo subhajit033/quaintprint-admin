@@ -42,10 +42,21 @@ const useDeletePdt = () => {
   });
 };
 
+const useGetAllOrders = (enabled) => {
+  return useQuery({
+    queryKey: ['all-order'],
+    queryFn: async () => {
+      return api.get('/admin/get-all-order');
+    },
+    enabled,
+  });
+};
+
 export const adminSevice = {
   useAdminLogin,
   useGetUnapprovedPdt,
   useGetQueries,
   useGetApprovedPdt,
   useDeletePdt,
+  useGetAllOrders,
 };

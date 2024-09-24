@@ -1,12 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Chart from '@/shared/Dashboard-main/order-status/Chart';
-import Table from '@/shared/tables/Table';
+
 import { TableHeaderName } from '@/utils/const';
 import api from '@/api';
-import OrderStatusPopUp from '@/shared/Dashboard-main/popups/OrderStatusPopUp';
+import OrderConfirmation from '@/shared/Dashboard-main/popups/OrderConfirmation';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { adminSevice } from '@/api/admin.service';
 
 const OrderStatus = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [enabled, setEnabled] = useState(false);
+  const { isSuccess, isError, isFetching, data } =
+    adminSevice.useGetAllOrders(enabled);
+  console.log(data);
+  useEffect(() => {
+    if (isSuccess || isError) {
+      setEnabled(false);
+    }
+  }, [isSuccess, isError]);
+  useEffect(() => {
+    setEnabled(true);
+  }, []);
   return (
     <div>
       <div>
@@ -19,10 +41,52 @@ const OrderStatus = () => {
         <Chart />
       </div>
       <div>
-        <Table
-          {...TableHeaderName.orderStatus}
-          height={'250'}
-          onClickHandler={() => setIsOpen(true)}
+        <Table>
+          <TableHeader>
+            <TableRow className='bg-[#EBD9FF]'>
+              {TableHeaderName.orderStatus.map((name) => {
+                return <TableHead key={name}>{name}</TableHead>;
+              })}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {!isFetching &&
+              data?.data?.data?.data.map((details) => {
+                return (
+                  <TableRow key={details._id}>
+                    <TableCell className='font-medium'>
+                      <div className='flex items-center gap-2'>
+                        <img
+                          className='h-10 w-10 rounded-full'
+                          src={details?.user?.avatar}
+                          alt='user_image'
+                        />
+                        <p>{`${details?.user?.firstName} ${details?.user?.lastName}`}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>Canvas Print</TableCell>
+                    <TableCell>12345678</TableCell>
+                    <TableCell>
+                      <button className='border border-green-600 text-green-600 flex items-center gap-2 font-semibold px-4 py-2 rounded-full'>
+                        {' '}
+                        <p className='h-2 w-2 rounded-full bg-green-600'></p>{' '}
+                        Succes
+                      </button>
+                    </TableCell>
+                    <TableCell>in Process</TableCell>
+                    <TableCell>
+                      <button className='bg-[#84012B] text-white px-5 py-2 rounded-full font-semibold'>
+                        Check
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+          </TableBody>
+        </Table>
+        <OrderConfirmation
+          isOpen={isOpen}
+          onClickHandler={() => setIsOpen(false)}
         />
       </div>
       {/* <Dialog open={isOpen}>
@@ -47,11 +111,11 @@ const OrderStatus = () => {
         </DialogContent>
       </Dialog> */}
 
-      <OrderStatusPopUp
+      {/* <OrderStatusPopUp
         isOpen={isOpen}
         isArtistPage={false}
         onClickHandler={() => setIsOpen(false)}
-      />
+      /> */}
     </div>
   );
 };
