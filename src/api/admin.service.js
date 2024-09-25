@@ -52,6 +52,15 @@ const useGetAllOrders = (enabled) => {
   });
 };
 
+const useApproveOrder = () => {
+  return useMutation({
+    mutationKey: ['approveOrder'],
+    mutationFn: async ({ orderId, body }) => {
+      return api.patch('/admin/approve-order/' + orderId, body);
+    },
+  });
+};
+
 export const adminSevice = {
   useAdminLogin,
   useGetUnapprovedPdt,
@@ -59,4 +68,5 @@ export const adminSevice = {
   useGetApprovedPdt,
   useDeletePdt,
   useGetAllOrders,
+  useApproveOrder,
 };

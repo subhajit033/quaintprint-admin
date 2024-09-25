@@ -90,6 +90,7 @@ const TableHeaderName = {
     'Client',
     'Painting Type',
     'Order Id',
+    'Order Date',
     'Payment Status',
     'Activity Status',
     'Action',

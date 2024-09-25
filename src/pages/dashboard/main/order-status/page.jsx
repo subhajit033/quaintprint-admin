@@ -18,17 +18,47 @@ import { adminSevice } from '@/api/admin.service';
 const OrderStatus = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [enabled, setEnabled] = useState(false);
-  const { isSuccess, isError, isFetching, data } =
+  const [selectedPdt, setSelectedPdt] = useState(null);
+  const [unSeenOrder, setUnseenOrder] = useState([]);
+  const [inProgOrder, setInProgressOrder] = useState(0);
+  const [completedOrder, setCompletedOrder] = useState([]);
+  const { isSuccess, isError, isFetching, data, refetch } =
     adminSevice.useGetAllOrders(enabled);
-  console.log(data);
+  console.log(selectedPdt);
   useEffect(() => {
     if (isSuccess || isError) {
       setEnabled(false);
+      if (isSuccess) {
+        const productData = data?.data?.data?.data;
+        setUnseenOrder(
+          productData.filter((data) => data.status === 'In process')
+        );
+        setCompletedOrder(
+          productData.filter((data) => data.status === 'Delivered')
+        );
+        // setInProgress(productData?.length - );
+      }
     }
   }, [isSuccess, isError]);
   useEffect(() => {
+    setInProgressOrder(
+      data?.data?.data?.data?.length -
+        unSeenOrder.length -
+        completedOrder.length
+    );
+  }, [unSeenOrder, completedOrder]);
+  useEffect(() => {
     setEnabled(true);
   }, []);
+
+  const fileterProduct = (idx) => {
+    setSelectedPdt(
+      data?.data?.data?.data?.filter((pdt) => {
+        return pdt._id === idx;
+      })[0]
+    );
+  };
+
   return (
     <div>
       <div>
@@ -38,7 +68,11 @@ const OrderStatus = () => {
         </h2>
       </div>
       <div className='my-6'>
-        <Chart />
+        <Chart
+          unSeenOrder={unSeenOrder.length}
+          completedOrder={completedOrder.length}
+          inProgOrder={inProgOrder}
+        />
       </div>
       <div>
         <Table>
@@ -65,7 +99,15 @@ const OrderStatus = () => {
                       </div>
                     </TableCell>
                     <TableCell>Canvas Print</TableCell>
-                    <TableCell>12345678</TableCell>
+                    <TableCell>advc1tr4</TableCell>
+                    <TableCell>
+                      {new Date(details?.createdAt).toLocaleString('en-US', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </TableCell>
+
                     <TableCell>
                       <button className='border border-green-600 text-green-600 flex items-center gap-2 font-semibold px-4 py-2 rounded-full'>
                         {' '}
@@ -73,9 +115,15 @@ const OrderStatus = () => {
                         Succes
                       </button>
                     </TableCell>
-                    <TableCell>in Process</TableCell>
+                    <TableCell>{details?.status}</TableCell>
                     <TableCell>
-                      <button className='bg-[#84012B] text-white px-5 py-2 rounded-full font-semibold'>
+                      <button
+                        onClick={() => {
+                          fileterProduct(details._id);
+                          setIsOpen(true);
+                        }}
+                        className='bg-[#84012B] text-white px-5 py-2 rounded-full font-semibold'
+                      >
                         Check
                       </button>
                     </TableCell>
@@ -87,6 +135,8 @@ const OrderStatus = () => {
         <OrderConfirmation
           isOpen={isOpen}
           onClickHandler={() => setIsOpen(false)}
+          orderDetails={selectedPdt}
+          refetch={refetch}
         />
       </div>
       {/* <Dialog open={isOpen}>
