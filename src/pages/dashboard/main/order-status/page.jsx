@@ -98,8 +98,8 @@ const OrderStatus = () => {
                         <p>{`${details?.user?.firstName} ${details?.user?.lastName}`}</p>
                       </div>
                     </TableCell>
-                    <TableCell>Canvas Print</TableCell>
-                    <TableCell>advc1tr4</TableCell>
+                    <TableCell>{details?.product?.paintingType}</TableCell>
+                    <TableCell>{details?.orderId}</TableCell>
                     <TableCell>
                       {new Date(details?.createdAt).toLocaleString('en-US', {
                         day: 'numeric',

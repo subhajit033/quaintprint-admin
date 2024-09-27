@@ -99,4 +99,25 @@ const TableHeaderName = {
   queryDetails: ['Name', 'Email', 'Phone No', 'Message'],
 };
 
-export { DashBoardUpperNavItem, DashBoardLowerNavItem, TableHeaderName };
+const paintaingType = [
+  'Canvas Printing',
+  'Acrylic Printing',
+  'Panoramic Canvas Printing',
+  'Sticker Printing',
+  'Sticker Label Printing',
+  'Sun Board Printing',
+  'One-way vision',
+  'Backlit Vinyl Print',
+  'Frosted Film Print',
+  'Decal Prints',
+  'Vinyl Print',
+  'Fabric Print',
+  'Customized Wallpaper',
+  'Personalised Canvas Print',
+];
+export {
+  DashBoardUpperNavItem,
+  DashBoardLowerNavItem,
+  TableHeaderName,
+  paintaingType,
+};

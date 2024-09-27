@@ -1,15 +1,32 @@
-import UploadProducts from '@/shared/UploadProducts/UploadProducts';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Trash2 } from 'lucide-react';
+import { Eye, Trash2 } from 'lucide-react';
 import { contentservice } from '@/api/content.service';
 import toast from 'react-hot-toast';
+import { paintaingType } from '@/utils/const';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 const BestSelling = () => {
   const [bestDeals, setBestDeals] = useState();
   const [enabled, setEnabled] = useState(false);
+  const [priceANdSize, setPriceAndSize] = useState([]);
+  const [price, setPrice] = useState('');
+  const [marketPrice, setMarketPrice] = useState('');
+  const [size, setSize] = useState('');
+  const [itemDetails, setItemDetails] = useState('');
+  const [aboutItem, setAboutItem] = useState([]);
+
   const { isError, isPending, isSuccess, data, refetch } =
     contentservice.useGetBestSeller(enabled);
   const uploadAsset = contentservice.useUploadAsset();
@@ -53,17 +70,29 @@ const BestSelling = () => {
 
   const handleUploadDelas = (e) => {
     e.preventDefault();
-    uploadBestDeals.mutate(bestDeals, {
-      onSuccess: () => {
-        toast.success('Product uploaded successfully');
-        setEnabled(true);
-        refetch();
-      },
-      onError: (e) => {
-        console.log(e);
-        toast.error('Failed');
-      },
-    });
+    uploadBestDeals.mutate(
+      { ...bestDeals, price: priceANdSize, aboutItem },
+      {
+        onSuccess: () => {
+          toast.success('Product uploaded successfully');
+          setPriceAndSize([]);
+          setAboutItem([]);
+          setEnabled(true);
+          refetch();
+        },
+        onError: (e) => {
+          console.log(e);
+          toast.error('Failed');
+        },
+      }
+    );
+  };
+
+  const handlePriceUpdate = () => {
+    setPriceAndSize([...priceANdSize, { price, size, marketPrice }]);
+    setPrice('');
+    setSize('');
+    setMarketPrice('');
   };
 
   useEffect(() => {
@@ -77,14 +106,14 @@ const BestSelling = () => {
   }, []);
   return (
     <div className='w-full space-y-4'>
-      <div className='grid grid-cols-4 gap-4'>
+      <div className='grid grid-cols-6 gap-4 border w-[1200px] overflow-auto'>
         {isSuccess && data?.data?.data?.data?.length === 0
           ? ''
           : data?.data?.data?.data?.map((product) => {
               return (
                 <div
                   key={product._id}
-                  className='w-[10rem] rounded-xl overflow-hidden mx-4'
+                  className='min-w-[10rem] rounded-xl overflow-hidden mx-4'
                 >
                   <img
                     className='object-cover rounded-xl w-full h-[10rem]'
@@ -93,45 +122,140 @@ const BestSelling = () => {
                   />
                   <div className='flex items-center justify-center gap-4'>
                     <div>
-                      <p className='text-center text-xl font-semibold'>
+                      <p className='text-center font-semibold'>
                         {product?.title}
                       </p>
-                      <p className='text-center font-bold text-blue-600'>{`${product?.price}/-`}</p>
+                      {/* <p className='text-center font-bold text-blue-600'>{`${product?.price}/-`}</p> */}
                     </div>
+                    <Eye className='cursor-pointer' />
                     <Trash2
                       onClick={() => deletePdt(product._id)}
-                      className='text-red-600'
+                      className='text-red-600 cursor-pointer'
                     />
                   </div>
                 </div>
               );
             })}
       </div>
-      <div>
+      <div className='flex justify-evenly'>
         <form onSubmit={handleUploadDelas}>
-          <div className='flex items-center justify-center w-full gap-10'>
-            <div>
-              <div className='grid w-[20rem] max-w-sm items-center gap-1.5'>
-                <Label htmlFor='title'>Title of Product</Label>
-                <Input
-                  onChange={(e) => handleInput(e)}
-                  type='text'
-                  name='title'
-                  id='title'
-                  required
-                  placeholder='Title..'
-                />
-              </div>
+          <div className='flex  items-center justify-start w-full  gap-10'>
+            <div className='space-y-2'>
+              <p>Select Painting from below</p>
+              <select
+                onChange={(e) =>
+                  setBestDeals({ ...bestDeals, title: e.target.value })
+                }
+                className='border border-black py-2 px-4 rounded-lg'
+              >
+                {paintaingType.map((type, i) => {
+                  return (
+                    <option key={i} value={type}>
+                      {type}
+                    </option>
+                  );
+                })}
+              </select>
+              {/**Price and sizes */}
               <div className='grid w-full max-w-sm items-center gap-1.5'>
-                <Label htmlFor='price'>Price</Label>
-                <Input
-                  type='text'
-                  onChange={(e) => handleInput(e)}
-                  name='price'
-                  id='price'
-                  required
-                  placeholder='Set price'
-                />
+                <div className='flex items-center gap-2'>
+                  <div className='grid w-full max-w-sm items-center gap-1.5'>
+                    <Label htmlFor=''>Size</Label>
+                    <Input
+                      type='text'
+                      onChange={(e) => setSize(e.target.value)}
+                      name='size'
+                      value={size}
+                      id=''
+                      placeholder='Set size'
+                    />
+                  </div>
+                  <div className='grid w-full max-w-sm items-center gap-1.5'>
+                    <Label htmlFor=''>Your Price</Label>
+                    <Input
+                      type='text'
+                      onChange={(e) => setPrice(e.target.value)}
+                      name='size'
+                      id=''
+                      placeholder='Price'
+                      value={price}
+                    />
+                  </div>
+                  <div className='grid w-full max-w-sm items-center gap-1.5'>
+                    <Label htmlFor=''>Market Price</Label>
+                    <Input
+                      type='text'
+                      onChange={(e) => setMarketPrice(e.target.value)}
+                      name='size'
+                      value={marketPrice}
+                      id=''
+                      placeholder='Market price'
+                    />
+                  </div>
+
+                  <Button type='button' onClick={handlePriceUpdate}>
+                    Add+
+                  </Button>
+                </div>
+              </div>
+              {/**Abot Item */}
+              <div className='grid w-full max-w-sm items-center gap-1.5'>
+                <Label htmlFor='price'>About Item</Label>
+                <div className='flex gap-2'>
+                  <Input
+                    type='text'
+                    onChange={(e) => {
+                      setItemDetails(e.target.value);
+                    }}
+                    name='size'
+                    value={itemDetails}
+                    placeholder='About Item'
+                  />
+                  <Button
+                    type='button'
+                    onClick={() => {
+                      setAboutItem([...aboutItem, itemDetails]);
+                      setItemDetails('');
+                    }}
+                  >
+                    Add+
+                  </Button>
+                </div>
+              </div>
+              <div className='flex  gap-2'>
+                <div className='grid w-full max-w-sm items-center gap-1.5'>
+                  <Label htmlFor=''>Item Weight</Label>
+                  <Input
+                    type='text'
+                    onChange={(e) => handleInput(e)}
+                    name='itemWeight'
+                    id=''
+                    required
+                    placeholder='Item Weight'
+                  />
+                </div>
+                <div className='grid w-full max-w-sm items-center gap-1.5'>
+                  <Label htmlFor=''>Material</Label>
+                  <Input
+                    type='text'
+                    onChange={(e) => handleInput(e)}
+                    name='material'
+                    id=''
+                    required
+                    placeholder='Material'
+                  />
+                </div>
+                <div className='grid w-full max-w-sm items-center gap-1.5'>
+                  <Label htmlFor=''>Texture</Label>
+                  <Input
+                    type='text'
+                    onChange={(e) => handleInput(e)}
+                    name='texture'
+                    id=''
+                    required
+                    placeholder='Texture'
+                  />
+                </div>
               </div>
             </div>
             <Label
@@ -158,9 +282,71 @@ const BestSelling = () => {
               />
             </Label>
           </div>
-          <Button type='submit'>Save</Button>
+          <Button className='mt-2' type='submit'>
+            Save
+          </Button>
         </form>
-        <div className='w-full h-[1px] my-4 bg-gray-400' />
+        {/**Preview details */}
+        <div>
+          <h1 className='text-xl'>Preview Details</h1>
+          {priceANdSize.length > 0 && (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Size</TableHead>
+                  <TableHead>Our Price</TableHead>
+                  <TableHead>Market Price</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {priceANdSize.map((data, i) => {
+                  return (
+                    <TableRow key={i}>
+                      <TableCell>{data?.size}</TableCell>
+                      <TableCell>{data?.price}</TableCell>
+                      <TableCell>
+                        <div className='flex items-center gap-8'>
+                          <p>{data?.marketPrice}</p>
+                          <p
+                            onClick={() =>
+                              setPriceAndSize(
+                                priceANdSize.filter((item, idx) => idx !== i)
+                              )
+                            }
+                            className='text-red-500 font-semibold cursor-pointer'
+                          >
+                            X
+                          </p>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          )}
+          {aboutItem.length > 0 && (
+            <div>
+              <p className='font-semibold'>About Item</p>
+              {aboutItem.map((item, i) => {
+                return (
+                  <li className='list-disc flex items-center gap-4' key={i}>
+                    <p>{item}</p>
+                    <p
+                      onClick={() =>
+                        setAboutItem(aboutItem.filter((item, idx) => idx !== i))
+                      }
+                      className='text-red-500 font-semibold cursor-pointer'
+                    >
+                      X
+                    </p>
+                  </li>
+                );
+              })}
+            </div>
+          )}
+        </div>
+        {/* <div className='w-full h-[1px] my-4 bg-gray-400' /> */}
       </div>
     </div>
   );
