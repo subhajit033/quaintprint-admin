@@ -18,7 +18,8 @@ const Login = () => {
   const hanldeLogin = (e) => {
     e.preventDefault();
     login.mutate(formData, {
-      onSuccess: () => {
+      onSuccess: (res) => {
+        document.cookie = `admin_access_token=${res?.data?.token}`;
         toast('Login Succesful');
         navigate('/dashboard');
         setIsauthenticated(true);
