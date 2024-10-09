@@ -105,7 +105,7 @@ const BestSelling = () => {
     setEnabled(true);
   }, []);
   return (
-    <div className='w-full space-y-4'>
+    <div className='w-full space-y-4 h-[90vh] overflow-auto'>
       <div className='grid grid-cols-6 gap-4 border w-[1200px] overflow-auto'>
         {isSuccess && data?.data?.data?.data?.length === 0
           ? ''

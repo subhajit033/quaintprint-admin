@@ -1,19 +1,19 @@
 const DashBoardUpperNavItem = [
-  {
-    title: 'Home',
-    url: '/dashboard/',
-    image: 'home-minimal.png',
-  },
+  // {
+  //   title: 'Home',
+  //   url: '/dashboard/',
+  //   image: 'home-minimal.png',
+  // },
   {
     title: 'Order Status',
     url: '/dashboard/order-status',
     image: 'order status.png',
   },
-  {
-    title: 'Payment Status',
-    url: '/dashboard/payment-status',
-    image: 'payments.png',
-  },
+  // {
+  //   title: 'Payment Status',
+  //   url: '/dashboard/payment-status',
+  //   image: 'payments.png',
+  // },
   {
     title: 'Artist Support',
     url: '/dashboard/artist-suport',
@@ -100,6 +100,7 @@ const TableHeaderName = {
 };
 
 const paintaingType = [
+  'Select Painting',
   'Canvas Printing',
   'Acrylic Printing',
   'Panoramic Canvas Printing',
