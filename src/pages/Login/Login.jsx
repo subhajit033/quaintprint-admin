@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 import { useContext } from 'react';
 import { AuthContext } from '@/utils/auth.context';
 import { Loader2 } from 'lucide-react';
+import { loginBg } from '@/assets/assets';
 
 const Login = () => {
   const login = adminSevice.useAdminLogin();
@@ -31,7 +32,10 @@ const Login = () => {
     });
   };
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-[url('https://s3-alpha-sig.figma.com/img/6a35/7b72/b9541e6885fa65958ca22a4ac0be069d?Expires=1722816000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Ul8VrzjWAhCD4ilFxk6tItn3LppTC~gNcEJPrUb~EvpUL49KN4WpbTTwYdcg9BNffkUOqBlyG4iJPK2OKFVFSDyUqqxfyATJlX7r9vVAHwd6MsQkLthkI-Aoia71sIaOIXH3V8cLSEECRA11iO~986U9KGbGYmvk23CLK6VViDNnDxrgbfIn6vy9ZlC5nzL74eJ-n5iEnhkI8q~YCJ2rju2SE~12GEcfyRjEDbM1dujEHW9e6XQ0eTSWKIi-K8paseXMYAWIECMwAobUdFWCfCfCUqhjdAw1K-lKb7qH-U5mPhbDZt7f8zjm6b6KVrMGM7eoktcYp1JX~p61zkPQqA__')] object-cover">
+    <div
+      style={{ backgroundImage: `url('${loginBg}')` }}
+      className='w-full h-screen flex justify-center items-center object-cover'
+    >
       <div className='p-6 w-[26rem] bg-white rounded-3xl'>
         <div className='my-2'>
           <p className='text-2xl font-semibold text-center'>
